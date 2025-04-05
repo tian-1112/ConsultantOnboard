@@ -45,9 +45,8 @@ function MainLayout({ children }: MainLayoutProps) {
               )}
               {isMobile && (
                 <div className="relative">
-                  <h1 className="text-xl font-bold text-primary flex items-center">
-                    <i className="ri-flower-line mr-1"></i>
-                    <span>BloomBoard</span>
+                  <h1 className="text-xl font-bold text-[#5B6A47] flex items-center">
+                    <span>Petals</span>
                   </h1>
                 </div>
               )}

@@ -1,6 +1,9 @@
 import { Link, useLocation } from "wouter";
 import { NavItem } from "@/lib/types";
 
+// Import the logo
+import petalsLogo from "@/assets/petals-logo.svg";
+
 interface SidebarProps {
   onNavItemClick?: () => void;
 }
@@ -19,11 +22,12 @@ const Sidebar = ({ onNavItemClick }: SidebarProps = {}) => {
 
   return (
     <aside className="flex flex-col w-64 bg-white shadow-md z-10 h-full">
-      <div className="flex items-center justify-center h-16 border-b border-gray-200">
-        <h1 className="text-2xl font-bold text-primary flex items-center">
-          <i className="ri-flower-line mr-2"></i>
-          <span>BloomBoard</span>
+      <div className="flex flex-col items-center justify-center py-6 border-b border-gray-200">
+        <img src={petalsLogo} alt="Petals Flower Shop Logo" className="h-16 w-16 mb-2" />
+        <h1 className="text-xl font-bold text-[#5B6A47]">
+          <span>Petals</span>
         </h1>
+        <div className="text-xs text-[#5B6A47] uppercase tracking-widest">Flower Shop</div>
       </div>
       
       <div className="py-4 flex flex-col justify-between flex-grow">
