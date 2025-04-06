@@ -31,6 +31,7 @@ function MainLayout({ children }: MainLayoutProps) {
                 <a href="/products?categoryId=2" className="block py-2 font-medium hover:text-primary transition-colors">Bouquets</a>
                 <a href="/cart" className="block py-2 font-medium hover:text-primary transition-colors">Cart</a>
                 <a href="/checkout" className="block py-2 font-medium hover:text-primary transition-colors">Checkout</a>
+                <a href="/auth" className="block py-2 font-medium hover:text-primary transition-colors">Sign In / Register</a>
               </nav>
             </div>
           </SheetContent>
@@ -43,19 +44,19 @@ function MainLayout({ children }: MainLayoutProps) {
       </main>
       
       {/* Footer */}
-      <footer className="bg-primary/10 text-primary-foreground mt-16">
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="font-bold text-lg mb-4">Petals Flower Shop</h3>
-              <p className="text-sm text-muted-foreground mb-4">
+      <footer className="bg-primary/10 text-primary-foreground mt-8 md:mt-16">
+        <div className="container mx-auto px-4 py-8 md:py-12">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            <div className="col-span-2 sm:col-span-2 md:col-span-1">
+              <h3 className="font-bold text-base md:text-lg mb-3 md:mb-4">Petals Flower Shop</h3>
+              <p className="text-xs md:text-sm text-muted-foreground mb-4">
                 Beautiful flowers for every occasion. From elegant bouquets to stunning arrangements.
               </p>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-sm">
+              <h4 className="font-semibold text-sm md:text-base mb-3 md:mb-4">Quick Links</h4>
+              <ul className="space-y-1 md:space-y-2 text-xs md:text-sm">
                 <li><a href="/" className="hover:underline">Home</a></li>
                 <li><a href="/products" className="hover:underline">Shop</a></li>
                 <li><a href="/cart" className="hover:underline">Cart</a></li>
@@ -64,8 +65,8 @@ function MainLayout({ children }: MainLayoutProps) {
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4">Categories</h4>
-              <ul className="space-y-2 text-sm">
+              <h4 className="font-semibold text-sm md:text-base mb-3 md:mb-4">Categories</h4>
+              <ul className="space-y-1 md:space-y-2 text-xs md:text-sm">
                 <li><a href="/products?categoryId=1" className="hover:underline">Fresh Flowers</a></li>
                 <li><a href="/products?categoryId=2" className="hover:underline">Bouquets</a></li>
                 <li><a href="/products?categoryId=3" className="hover:underline">Potted Plants</a></li>
@@ -73,23 +74,23 @@ function MainLayout({ children }: MainLayoutProps) {
               </ul>
             </div>
             
-            <div>
-              <h4 className="font-semibold mb-4">Contact Us</h4>
-              <ul className="space-y-2 text-sm">
+            <div className="col-span-2 sm:col-span-2 md:col-span-1">
+              <h4 className="font-semibold text-sm md:text-base mb-3 md:mb-4">Contact Us</h4>
+              <ul className="space-y-1 md:space-y-2 text-xs md:text-sm">
                 <li className="flex items-center"><i className="ri-map-pin-line mr-2"></i> 123 Flower Street, City</li>
                 <li className="flex items-center"><i className="ri-phone-line mr-2"></i> (123) 456-7890</li>
                 <li className="flex items-center"><i className="ri-mail-line mr-2"></i> info@petalsflowershop.com</li>
               </ul>
               
               <div className="flex space-x-4 mt-4">
-                <a href="#" className="text-primary hover:text-primary/80"><i className="ri-facebook-fill text-xl"></i></a>
-                <a href="#" className="text-primary hover:text-primary/80"><i className="ri-instagram-line text-xl"></i></a>
-                <a href="#" className="text-primary hover:text-primary/80"><i className="ri-twitter-fill text-xl"></i></a>
+                <a href="#" className="text-primary hover:text-primary/80"><i className="ri-facebook-fill text-lg md:text-xl"></i></a>
+                <a href="#" className="text-primary hover:text-primary/80"><i className="ri-instagram-line text-lg md:text-xl"></i></a>
+                <a href="#" className="text-primary hover:text-primary/80"><i className="ri-twitter-fill text-lg md:text-xl"></i></a>
               </div>
             </div>
           </div>
           
-          <div className="border-t border-gray-200 mt-12 pt-6 text-center text-sm text-muted-foreground">
+          <div className="border-t border-gray-200 mt-6 md:mt-12 pt-4 md:pt-6 text-center text-xs md:text-sm text-muted-foreground">
             <p>© {new Date().getFullYear()} Petals Flower Shop. All rights reserved.</p>
           </div>
         </div>

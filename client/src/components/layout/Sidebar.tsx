@@ -89,6 +89,13 @@ const Sidebar = ({ onNavItemClick }: SidebarProps = {}) => {
               </div>
             </Link>
             
+            <Link href="/auth">
+              <div className="flex items-center text-gray-700 hover:text-primary">
+                <i className="ri-user-line text-lg mr-1"></i>
+                <span>Sign In</span>
+              </div>
+            </Link>
+            
             <Button asChild className="ml-4">
               <Link href="/checkout">Checkout</Link>
             </Button>
@@ -104,6 +111,12 @@ const Sidebar = ({ onNavItemClick }: SidebarProps = {}) => {
                     {cartCount}
                   </Badge>
                 )}
+              </div>
+            </Link>
+            
+            <Link href="/auth">
+              <div className="mr-3">
+                <i className="ri-user-line text-xl"></i>
               </div>
             </Link>
             
