@@ -31,7 +31,6 @@ function MainLayout({ children }: MainLayoutProps) {
                 <a href="/products?categoryId=2" className="block py-2 font-medium hover:text-primary transition-colors">Bouquets</a>
                 <a href="/cart" className="block py-2 font-medium hover:text-primary transition-colors">Cart</a>
                 <a href="/checkout" className="block py-2 font-medium hover:text-primary transition-colors">Checkout</a>
-                <a href="/auth" className="block py-2 font-medium hover:text-primary transition-colors">Sign In / Register</a>
               </nav>
             </div>
           </SheetContent>

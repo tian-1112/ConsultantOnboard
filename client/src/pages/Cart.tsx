@@ -5,24 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { CartItem } from '@/lib/types';
-
-// Mock cart data - in a real app this would come from state management or localStorage
-const initialCartItems: CartItem[] = [
-  {
-    productId: 1,
-    name: 'Red Roses',
-    price: 29.99,
-    quantity: 1,
-    imageUrl: 'https://images.unsplash.com/photo-1548094990-c16ca90f1f0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-  },
-  {
-    productId: 2,
-    name: 'Tulip Bouquet',
-    price: 24.99,
-    quantity: 2,
-    imageUrl: 'https://images.unsplash.com/photo-1520219306112-90c15f970591?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-  }
-];
+import { initialCartItems } from '../initialCartItems';
 
 export default function Cart() {
   const [, setLocation] = useLocation();
@@ -45,7 +28,8 @@ export default function Cart() {
   };
   
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = subtotal > 50 ? 0 : 5.99;
+  // Free shipping over 500,000 IDR, otherwise 20,000 IDR
+  const shipping = subtotal > 500000 ? 0 : 20000;
   const total = subtotal + shipping;
   
   if (cartItems.length === 0) {
@@ -91,7 +75,7 @@ export default function Cart() {
                     </button>
                   </div>
                   
-                  <p className="text-muted-foreground my-2">${item.price.toFixed(2)}</p>
+                  <p className="text-muted-foreground my-2">Rp {item.price.toLocaleString('id-ID')}</p>
                   
                   <div className="flex items-center gap-2">
                     <Button 
@@ -124,7 +108,7 @@ export default function Cart() {
                     </Button>
                     
                     <div className="ml-auto font-semibold">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      Rp {(item.price * item.quantity).toLocaleString('id-ID')}
                     </div>
                   </div>
                 </div>
@@ -147,7 +131,7 @@ export default function Cart() {
             <div className="space-y-4">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>Rp {subtotal.toLocaleString('id-ID')}</span>
               </div>
               
               <div className="flex justify-between">
@@ -155,13 +139,13 @@ export default function Cart() {
                 <span>
                   {shipping === 0 
                     ? 'Free' 
-                    : `$${shipping.toFixed(2)}`}
+                    : `Rp ${shipping.toLocaleString('id-ID')}`}
                 </span>
               </div>
               
               {shipping > 0 && (
                 <div className="text-sm text-muted-foreground">
-                  Free shipping on orders over $50
+                  Free shipping on orders over Rp 500.000
                 </div>
               )}
               
@@ -169,7 +153,7 @@ export default function Cart() {
               
               <div className="flex justify-between font-bold">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>Rp {total.toLocaleString('id-ID')}</span>
               </div>
               
               <Button className="w-full" size="lg" onClick={() => setLocation('/checkout')}>
@@ -177,7 +161,7 @@ export default function Cart() {
               </Button>
               
               <div className="text-sm text-muted-foreground text-center mt-4">
-                Secure payments powered by Stripe
+                Secure payments with e-wallet and debit
               </div>
             </div>
           </Card>

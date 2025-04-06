@@ -153,7 +153,7 @@ export default function Products() {
                       <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">{product.description}</p>
                       <Separator className="my-2 sm:my-4" />
                       <div className="flex justify-between items-center">
-                        <span className="text-sm sm:text-base font-semibold">${Number(product.price).toFixed(2)}</span>
+                        <span className="text-sm sm:text-base font-semibold">Rp {Number(product.price).toLocaleString('id-ID')}</span>
                         <Badge variant={product.stock > 0 ? "outline" : "destructive"} className="text-xs">
                           {product.stock > 0 ? `${product.stock} left` : 'Out'}
                         </Badge>

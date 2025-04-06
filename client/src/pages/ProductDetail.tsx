@@ -54,10 +54,22 @@ export default function ProductDetail() {
   const addToCart = () => {
     if (!product) return;
     
+    // Logic to add to cart would normally go here
+    
     toast({
       title: 'Added to cart',
       description: `${quantity} × ${product.name} added to your cart`,
     });
+  };
+  
+  const buyNow = () => {
+    if (!product) return;
+    
+    // Logic to add to cart first
+    addToCart();
+    
+    // Navigate to checkout page
+    window.location.href = '/checkout';
   };
   
   const category = product?.categoryId 
@@ -109,7 +121,7 @@ export default function ProductDetail() {
           <Badge variant="outline" className="mb-2 w-fit">{category?.name || 'Uncategorized'}</Badge>
           <h1 className="text-2xl md:text-3xl font-bold mb-2">{product.name}</h1>
           <div className="mb-4 md:mb-6">
-            <span className="text-xl md:text-2xl font-semibold">${Number(product.price).toFixed(2)}</span>
+            <span className="text-xl md:text-2xl font-semibold">Rp {Number(product.price).toLocaleString('id-ID')}</span>
           </div>
           
           <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">{product.description}</p>
@@ -161,7 +173,7 @@ export default function ProductDetail() {
                   <Button size="lg" className="flex-grow" onClick={addToCart}>
                     Add to Cart
                   </Button>
-                  <Button size="lg" variant="secondary" className="flex-grow">
+                  <Button size="lg" variant="secondary" className="flex-grow" onClick={buyNow}>
                     Buy Now
                   </Button>
                 </div>
@@ -197,7 +209,7 @@ export default function ProductDetail() {
                   <div className="p-2 sm:p-4">
                     <h3 className="text-sm sm:text-base font-semibold line-clamp-1">{relatedProduct.name}</h3>
                     <p className="text-xs sm:text-sm text-muted-foreground line-clamp-1 mb-1 sm:mb-2">{relatedProduct.description}</p>
-                    <span className="text-sm sm:text-base font-medium">${Number(relatedProduct.price).toFixed(2)}</span>
+                    <span className="text-sm sm:text-base font-medium">Rp {Number(relatedProduct.price).toLocaleString('id-ID')}</span>
                   </div>
                 </Link>
               </Card>

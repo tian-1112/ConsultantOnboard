@@ -10,13 +10,6 @@ import {
 } from "@shared/schema";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
-import Stripe from "stripe";
-
-// Initialize Stripe with secret key
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
-}
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Error handling middleware
@@ -324,7 +317,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Stripe Payment API
+  // E-wallet/Debit Payment API
   app.post('/api/create-payment-intent', async (req, res) => {
     try {
       const { amount } = req.body;
@@ -333,20 +326,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: 'Valid amount is required' });
       }
       
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount: Math.round(Number(amount) * 100), // Convert to cents
-        currency: 'usd',
-        // Verify your integration in this guide by including this parameter
-        metadata: { integration_check: 'accept_a_payment' },
-      });
+      // Simulating a payment transaction with a unique ID
+      const transactionId = `ewallet_${Date.now()}_${Math.random().toString(36).substring(2, 10)}`;
       
       res.json({ 
-        clientSecret: paymentIntent.client_secret 
+        clientSecret: transactionId,
+        provider: 'ewallet' 
       });
     } catch (error: any) {
-      console.error('Error creating payment intent:', error);
+      console.error('Error creating payment:', error);
       res.status(500).json({ 
-        message: 'Error creating payment intent', 
+        message: 'Error processing payment request', 
         error: error.message 
       });
     }

@@ -1,8 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useStripe, Elements, PaymentElement, useElements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 import { useToast } from '@/hooks/use-toast';
-import { apiRequest } from '@/lib/queryClient';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -10,50 +7,27 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Link, useLocation } from 'wouter';
 
-// Make sure to call loadStripe outside of a component's render to avoid
-// recreating the Stripe object on every render.
-if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
-  throw new Error('Missing required Stripe key: VITE_STRIPE_PUBLIC_KEY');
-}
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
-
 const CheckoutForm = () => {
-  const stripe = useStripe();
-  const elements = useElements();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-
     setIsLoading(true);
 
     try {
-      const { error } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: window.location.origin + '/order-success',
-        },
+      // Simulate payment process
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Simulate success
+      toast({
+        title: "Payment Successful",
+        description: "Thank you for your purchase!",
       });
-
-      if (error) {
-        toast({
-          title: "Payment Failed",
-          description: error.message,
-          variant: "destructive",
-        });
-      } else {
-        // Payment succeeded! The redirect will happen thanks to the return_url
-        toast({
-          title: "Payment Successful",
-          description: "Thank you for your purchase!",
-        });
-      }
+      
+      // Redirect to success page
+      setLocation('/order-success');
     } catch (err) {
       console.error('Payment error:', err);
       toast({
@@ -69,10 +43,45 @@ const CheckoutForm = () => {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <h3 className="text-lg font-semibold">Payment Information</h3>
-      <PaymentElement />
+      
+      <div className="space-y-4 mb-4">
+        <div className="grid grid-cols-1 gap-4">
+          <div className="p-4 border rounded-lg">
+            <div className="flex items-center">
+              <input type="radio" id="gopay" name="payment" className="mr-2" defaultChecked />
+              <label htmlFor="gopay" className="font-medium">GoPay</label>
+              <div className="w-12 h-8 bg-blue-500 rounded ml-auto flex items-center justify-center text-white font-bold text-xs">GoPay</div>
+            </div>
+          </div>
+          
+          <div className="p-4 border rounded-lg">
+            <div className="flex items-center">
+              <input type="radio" id="ovo" name="payment" className="mr-2" />
+              <label htmlFor="ovo" className="font-medium">OVO</label>
+              <div className="w-12 h-8 bg-purple-700 rounded ml-auto flex items-center justify-center text-white font-bold text-xs">OVO</div>
+            </div>
+          </div>
+          
+          <div className="p-4 border rounded-lg">
+            <div className="flex items-center">
+              <input type="radio" id="bca" name="payment" className="mr-2" />
+              <label htmlFor="bca" className="font-medium">BCA Virtual Account</label>
+              <div className="w-12 h-8 bg-blue-600 rounded ml-auto flex items-center justify-center text-white font-bold text-xs">BCA</div>
+            </div>
+          </div>
+          
+          <div className="p-4 border rounded-lg">
+            <div className="flex items-center">
+              <input type="radio" id="mandiri" name="payment" className="mr-2" />
+              <label htmlFor="mandiri" className="font-medium">Mandiri Virtual Account</label>
+              <div className="w-16 h-8 bg-blue-900 rounded ml-auto flex items-center justify-center text-white font-bold text-xs">MANDIRI</div>
+            </div>
+          </div>
+        </div>
+      </div>
       
       <div className="pt-4">
-        <Button type="submit" className="w-full" size="lg" disabled={!stripe || isLoading}>
+        <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
           {isLoading ? (
             <span className="flex items-center gap-2">
               <span className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
@@ -85,36 +94,20 @@ const CheckoutForm = () => {
       </div>
       
       <p className="text-sm text-center text-muted-foreground">
-        Your payment is securely processed by Stripe. We don't store your payment details.
+        Your payment is securely processed. We accept e-wallet and debit payments.
       </p>
     </form>
   );
 };
 
 export default function Checkout() {
-  const [clientSecret, setClientSecret] = useState("");
   const { toast } = useToast();
   const [, setLocation] = useLocation();
 
+  // No need to fetch payment intent from Stripe anymore
   useEffect(() => {
-    // Create PaymentIntent when the page loads
-    const fetchPaymentIntent = async () => {
-      try {
-        const response = await apiRequest("POST", "/api/create-payment-intent", { amount: 79.97 }); // Replace with actual cart total
-        const data = await response.json();
-        setClientSecret(data.clientSecret);
-      } catch (error) {
-        console.error('Error creating payment intent:', error);
-        toast({
-          title: "Error",
-          description: "Failed to initialize payment. Please try again.",
-          variant: "destructive",
-        });
-      }
-    };
-
-    fetchPaymentIntent();
-  }, [toast]);
+    // Placeholder for any additional initialization needed
+  }, []);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -152,7 +145,7 @@ export default function Checkout() {
               
               <div className="space-y-2">
                 <Label htmlFor="phone">Phone</Label>
-                <Input id="phone" placeholder="+1 (123) 456-7890" />
+                <Input id="phone" placeholder="+62 812-3456-7890" />
               </div>
             </div>
           </Card>
@@ -169,40 +162,30 @@ export default function Checkout() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="city">City</Label>
-                  <Input id="city" placeholder="New York" />
+                  <Input id="city" placeholder="Jakarta" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="state">State/Province</Label>
-                  <Input id="state" placeholder="NY" />
+                  <Input id="state" placeholder="DKI Jakarta" />
                 </div>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="zipCode">ZIP/Postal Code</Label>
-                  <Input id="zipCode" placeholder="10001" />
+                  <Input id="zipCode" placeholder="12345" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="country">Country</Label>
-                  <Input id="country" placeholder="United States" />
+                  <Input id="country" placeholder="Indonesia" />
                 </div>
               </div>
             </div>
           </Card>
           
-          {clientSecret && (
-            <Card className="p-6">
-              <Elements stripe={stripePromise} options={{ clientSecret }}>
-                <CheckoutForm />
-              </Elements>
-            </Card>
-          )}
-          
-          {!clientSecret && (
-            <div className="flex items-center justify-center p-12">
-              <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" />
-            </div>
-          )}
+          <Card className="p-6">
+            <CheckoutForm />
+          </Card>
         </div>
         
         {/* Order summary */}
@@ -221,9 +204,9 @@ export default function Checkout() {
                 </div>
                 <div className="flex-grow">
                   <p className="font-medium">Red Roses</p>
-                  <p className="text-sm text-muted-foreground">1 × $29.99</p>
+                  <p className="text-sm text-muted-foreground">1 × Rp 299.000</p>
                 </div>
-                <div className="font-semibold">$29.99</div>
+                <div className="font-semibold">Rp 299.000</div>
               </div>
               
               <div className="flex gap-4 items-center">
@@ -236,9 +219,9 @@ export default function Checkout() {
                 </div>
                 <div className="flex-grow">
                   <p className="font-medium">Tulip Bouquet</p>
-                  <p className="text-sm text-muted-foreground">2 × $24.99</p>
+                  <p className="text-sm text-muted-foreground">2 × Rp 249.900</p>
                 </div>
-                <div className="font-semibold">$49.98</div>
+                <div className="font-semibold">Rp 499.800</div>
               </div>
             </div>
             
@@ -247,7 +230,7 @@ export default function Checkout() {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>$79.97</span>
+                <span>Rp 798.800</span>
               </div>
               
               <div className="flex justify-between">
@@ -257,7 +240,7 @@ export default function Checkout() {
               
               <div className="flex justify-between font-bold text-lg">
                 <span>Total</span>
-                <span>$79.97</span>
+                <span>Rp 798.800</span>
               </div>
             </div>
           </Card>

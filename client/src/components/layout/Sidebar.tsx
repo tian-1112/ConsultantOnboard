@@ -89,13 +89,6 @@ const Sidebar = ({ onNavItemClick }: SidebarProps = {}) => {
               </div>
             </Link>
             
-            <Link href="/auth">
-              <div className="flex items-center text-gray-700 hover:text-primary">
-                <i className="ri-user-line text-lg mr-1"></i>
-                <span>Sign In</span>
-              </div>
-            </Link>
-            
             <Button asChild className="ml-4">
               <Link href="/checkout">Checkout</Link>
             </Button>
@@ -104,7 +97,7 @@ const Sidebar = ({ onNavItemClick }: SidebarProps = {}) => {
           {/* Mobile Menu */}
           <div className="md:hidden flex items-center">
             <Link href="/cart">
-              <div className="relative mr-4">
+              <div className="relative">
                 <i className="ri-shopping-cart-2-line text-xl"></i>
                 {cartCount > 0 && (
                   <Badge variant="destructive" className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center p-0 text-xs">
@@ -113,16 +106,6 @@ const Sidebar = ({ onNavItemClick }: SidebarProps = {}) => {
                 )}
               </div>
             </Link>
-            
-            <Link href="/auth">
-              <div className="mr-3">
-                <i className="ri-user-line text-xl"></i>
-              </div>
-            </Link>
-            
-            <Button variant="ghost" className="p-2" onClick={onNavItemClick}>
-              <i className="ri-menu-line text-xl"></i>
-            </Button>
           </div>
         </div>
       </div>
