@@ -2,23 +2,23 @@ import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import NotFound from "@/pages/not-found";
-import Dashboard from "@/pages/Dashboard";
-import Inventory from "@/pages/Inventory";
-import Orders from "@/pages/Orders";
-import Customers from "@/pages/Customers";
-import Reports from "@/pages/Reports";
-import POS from "@/pages/POS";
+import Home from "@/pages/Home";
+import Products from "@/pages/Products";
+import ProductDetail from "@/pages/ProductDetail";
+import Cart from "@/pages/Cart";
+import Checkout from "@/pages/Checkout";
+import OrderSuccess from "@/pages/OrderSuccess";
 import MainLayout from "@/components/layout/MainLayout";
 
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Dashboard} />
-      <Route path="/inventory" component={Inventory} />
-      <Route path="/orders" component={Orders} />
-      <Route path="/customers" component={Customers} />
-      <Route path="/reports" component={Reports} />
-      <Route path="/pos" component={POS} />
+      <Route path="/" component={Home} />
+      <Route path="/products" component={Products} />
+      <Route path="/products/:id" component={ProductDetail} />
+      <Route path="/cart" component={Cart} />
+      <Route path="/checkout" component={Checkout} />
+      <Route path="/order-success" component={OrderSuccess} />
       <Route component={NotFound} />
     </Switch>
   );

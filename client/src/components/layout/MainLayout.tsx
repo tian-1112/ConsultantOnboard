@@ -1,9 +1,5 @@
 import { ReactNode, useState } from "react";
 import Sidebar from "./Sidebar";
-import { Search, Menu, Bell } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Avatar } from "@/components/ui/avatar";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -16,79 +12,88 @@ function MainLayout({ children }: MainLayoutProps) {
   const isMobile = useIsMobile();
 
   return (
-    <div className="min-h-screen bg-neutral-lightest flex">
+    <div className="min-h-screen bg-neutral-50 flex flex-col">
       {/* Fixed floral background pattern with reduced opacity */}
       <div className="fixed inset-0 z-[-1] bg-[url('https://images.unsplash.com/photo-1559511260-66a654ae982a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center bg-no-repeat opacity-[0.03]"></div>
 
-      {/* Sidebar for desktop */}
-      {!isMobile && <Sidebar />}
+      {/* Navigation Header */}
+      <Sidebar onNavItemClick={() => setMobileMenuOpen(false)} />
 
-      {/* Mobile menu */}
+      {/* Mobile menu - slides in from side */}
       {isMobile && (
         <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-          <SheetContent side="left" className="p-0">
-            <Sidebar onNavItemClick={() => setMobileMenuOpen(false)} />
+          <SheetContent side="left" className="w-full sm:max-w-sm p-0">
+            <div className="h-full flex flex-col py-20 px-6">
+              <nav className="space-y-6 text-lg">
+                <a href="/" className="block py-2 font-medium hover:text-primary transition-colors">Home</a>
+                <a href="/products" className="block py-2 font-medium hover:text-primary transition-colors">Shop All</a>
+                <a href="/products?categoryId=1" className="block py-2 font-medium hover:text-primary transition-colors">Fresh Flowers</a>
+                <a href="/products?categoryId=2" className="block py-2 font-medium hover:text-primary transition-colors">Bouquets</a>
+                <a href="/cart" className="block py-2 font-medium hover:text-primary transition-colors">Cart</a>
+                <a href="/checkout" className="block py-2 font-medium hover:text-primary transition-colors">Checkout</a>
+              </nav>
+            </div>
           </SheetContent>
         </Sheet>
       )}
-
-      {/* Main content wrapper */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Top navigation */}
-        <header className="bg-white shadow-sm z-10">
-          <div className="flex items-center justify-between px-4 py-3">
-            <div className="flex items-center space-x-3">
-              {isMobile && (
-                <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(true)} className="text-gray-500">
-                  <Menu className="h-5 w-5" />
-                </Button>
-              )}
-              {isMobile && (
-                <div className="relative">
-                  <h1 className="text-xl font-bold text-[#5B6A47] flex items-center">
-                    <span>Petals</span>
-                  </h1>
-                </div>
-              )}
+      
+      {/* Main content */}
+      <main className="flex-1 pt-20">
+        {children}
+      </main>
+      
+      {/* Footer */}
+      <footer className="bg-primary/10 text-primary-foreground mt-16">
+        <div className="container mx-auto px-4 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="font-bold text-lg mb-4">Petals Flower Shop</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Beautiful flowers for every occasion. From elegant bouquets to stunning arrangements.
+              </p>
             </div>
             
-            <div className="flex items-center space-x-4">
-              <div className="relative hidden md:block">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
-                <Input 
-                  type="text" 
-                  placeholder="Search..." 
-                  className="w-48 lg:w-64 pl-8"
-                />
-              </div>
+            <div>
+              <h4 className="font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-sm">
+                <li><a href="/" className="hover:underline">Home</a></li>
+                <li><a href="/products" className="hover:underline">Shop</a></li>
+                <li><a href="/cart" className="hover:underline">Cart</a></li>
+                <li><a href="/checkout" className="hover:underline">Checkout</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Categories</h4>
+              <ul className="space-y-2 text-sm">
+                <li><a href="/products?categoryId=1" className="hover:underline">Fresh Flowers</a></li>
+                <li><a href="/products?categoryId=2" className="hover:underline">Bouquets</a></li>
+                <li><a href="/products?categoryId=3" className="hover:underline">Potted Plants</a></li>
+                <li><a href="/products?categoryId=4" className="hover:underline">Succulents</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Contact Us</h4>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-center"><i className="ri-map-pin-line mr-2"></i> 123 Flower Street, City</li>
+                <li className="flex items-center"><i className="ri-phone-line mr-2"></i> (123) 456-7890</li>
+                <li className="flex items-center"><i className="ri-mail-line mr-2"></i> info@petalsflowershop.com</li>
+              </ul>
               
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="h-5 w-5 text-gray-500" />
-                <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 text-white text-xs flex items-center justify-center rounded-full">3</span>
-              </Button>
-              
-              <div className="border-l border-gray-200 pl-4 flex items-center">
-                <Avatar>
-                  <div className="bg-primary text-white flex items-center justify-center h-full">
-                    JD
-                  </div>
-                </Avatar>
-                <div className="ml-2 hidden sm:block">
-                  <p className="text-sm font-medium">Jane Doe</p>
-                  <p className="text-xs text-gray-500">Admin</p>
-                </div>
+              <div className="flex space-x-4 mt-4">
+                <a href="#" className="text-primary hover:text-primary/80"><i className="ri-facebook-fill text-xl"></i></a>
+                <a href="#" className="text-primary hover:text-primary/80"><i className="ri-instagram-line text-xl"></i></a>
+                <a href="#" className="text-primary hover:text-primary/80"><i className="ri-twitter-fill text-xl"></i></a>
               </div>
             </div>
           </div>
-        </header>
-        
-        {/* Main content */}
-        <main className="flex-1 overflow-y-auto bg-neutral-lightest p-4">
-          <div className="max-w-7xl mx-auto">
-            {children}
+          
+          <div className="border-t border-gray-200 mt-12 pt-6 text-center text-sm text-muted-foreground">
+            <p>© {new Date().getFullYear()} Petals Flower Shop. All rights reserved.</p>
           </div>
-        </main>
-      </div>
+        </div>
+      </footer>
     </div>
   );
 }
