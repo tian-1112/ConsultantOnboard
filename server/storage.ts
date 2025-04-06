@@ -286,52 +286,52 @@ export class DatabaseStorage implements IStorage {
       .values({ name: "Wedding", description: "Wedding flowers and arrangements" })
       .returning();
 
-    // Add sample products
+    // Add sample products with the newly uploaded images
     await db.insert(products).values([
       {
         name: "Red Roses",
-        description: "Beautiful long-stem red roses",
+        description: "Beautiful long-stem red roses, perfect for romantic occasions and expressions of love",
         sku: "RS-001",
         price: "24.99",
-        imageUrl: "https://images.unsplash.com/photo-1564201716775-851813f7fc82?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+        imageUrl: "/assets/red-rose.jpeg",
         categoryId: freshFlowers.id,
         stock: 78
       },
       {
         name: "Tulip Bouquet",
-        description: "Colorful tulip bouquet with assorted colors",
+        description: "Colorful tulip bouquet with assorted colors, bringing cheer and brightness to any space",
         sku: "TB-012",
         price: "32.99",
-        imageUrl: "https://images.unsplash.com/photo-1561181286-d5c73431a97f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+        imageUrl: "/assets/tulip-bouquet.jpeg",
         categoryId: arrangements.id,
         stock: 42
       },
       {
         name: "Potted Orchid",
-        description: "Elegant potted orchid plant",
+        description: "Elegant potted orchid plant that adds sophistication and beauty to your home or office",
         sku: "PO-053",
         price: "45.00",
-        imageUrl: "https://images.unsplash.com/photo-1584589167171-541ce45f1eea?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+        imageUrl: "/assets/potted-orchids.jpeg",
         categoryId: pottedPlants.id,
         stock: 12
       },
       {
         name: "Wedding Bouquet",
-        description: "Classic white wedding bouquet",
+        description: "Classic white wedding bouquet, designed to make your special day even more beautiful",
         sku: "WB-024",
         price: "129.99",
-        imageUrl: "https://images.unsplash.com/photo-1558350315-8aa00e8e4590?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+        imageUrl: "/assets/wedding-bouquet.jpeg",
         categoryId: wedding.id,
         stock: 5
       },
       {
         name: "Succulent Collection",
-        description: "Set of 3 small succulents in decorative pots",
+        description: "Set of 3 small succulents in decorative pots, low-maintenance plants perfect for any space",
         sku: "SC-087",
         price: "36.50",
-        imageUrl: "https://images.unsplash.com/photo-1575773476816-873ad10f4908?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+        imageUrl: "/assets/succulent-collection.jpeg",
         categoryId: pottedPlants.id,
-        stock: 0
+        stock: 10
       }
     ]);
 
