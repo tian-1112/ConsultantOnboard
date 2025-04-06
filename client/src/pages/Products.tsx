@@ -53,22 +53,48 @@ export default function Products() {
   
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-        <h1 className="text-3xl font-bold">All Products</h1>
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 md:mb-8 gap-2 md:gap-4">
+        <h1 className="text-2xl md:text-3xl font-bold">All Products</h1>
         
         <div className="w-full md:w-1/3">
           <Input
             placeholder="Search products..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full"
+            className="w-full h-10"
           />
         </div>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-8">
-        {/* Categories sidebar */}
-        <div className="lg:col-span-1">
+      {/* Mobile Categories as horizontal scrolling */}
+      <div className="block lg:hidden mb-4 overflow-auto">
+        <div className="flex space-x-2 p-1 min-w-full">
+          <Button 
+            variant={categoryFilter === null ? "default" : "outline"}
+            size="sm"
+            className="whitespace-nowrap"
+            onClick={() => setCategoryFilter(null)}
+          >
+            All
+          </Button>
+          
+          {categories?.map(category => (
+            <Button 
+              key={category.id} 
+              variant={categoryFilter === category.id ? "default" : "outline"}
+              size="sm"
+              className="whitespace-nowrap"
+              onClick={() => setCategoryFilter(category.id)}
+            >
+              {category.name}
+            </Button>
+          ))}
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-8 mb-8">
+        {/* Categories sidebar - Desktop only */}
+        <div className="hidden lg:block lg:col-span-1">
           <div className="bg-muted/30 rounded-lg p-6">
             <h2 className="text-xl font-semibold mb-4">Categories</h2>
             <div className="space-y-2">
@@ -108,10 +134,10 @@ export default function Products() {
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6">
               {filteredProducts?.map(product => (
                 <Card key={product.id} className="overflow-hidden flex flex-col h-full">
-                  <div className="h-48 overflow-hidden">
+                  <div className="h-32 sm:h-48 overflow-hidden">
                     <Link href={`/products/${product.id}`}>
                       <img 
                         src={product.imageUrl || 'https://placehold.co/600x400?text=No+Image'} 
@@ -120,23 +146,24 @@ export default function Products() {
                       />
                     </Link>
                   </div>
-                  <CardContent className="pt-6 flex-grow">
+                  <CardContent className="pt-3 sm:pt-6 p-3 sm:p-6 flex-grow">
                     <Link href={`/products/${product.id}`}>
-                      <Badge className="mb-2">{categories?.find(c => c.id === product.categoryId)?.name}</Badge>
-                      <CardTitle className="mb-2 hover:text-primary transition-colors">{product.name}</CardTitle>
-                      <p className="text-muted-foreground line-clamp-2">{product.description}</p>
-                      <Separator className="my-4" />
+                      <Badge className="mb-1 sm:mb-2 text-xs sm:text-sm">{categories?.find(c => c.id === product.categoryId)?.name}</Badge>
+                      <CardTitle className="text-base sm:text-xl mb-1 sm:mb-2 hover:text-primary transition-colors">{product.name}</CardTitle>
+                      <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">{product.description}</p>
+                      <Separator className="my-2 sm:my-4" />
                       <div className="flex justify-between items-center">
-                        <span className="font-semibold">${Number(product.price).toFixed(2)}</span>
-                        <Badge variant={product.stock > 0 ? "outline" : "destructive"}>
-                          {product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}
+                        <span className="text-sm sm:text-base font-semibold">${Number(product.price).toFixed(2)}</span>
+                        <Badge variant={product.stock > 0 ? "outline" : "destructive"} className="text-xs">
+                          {product.stock > 0 ? `${product.stock} left` : 'Out'}
                         </Badge>
                       </div>
                     </Link>
                   </CardContent>
-                  <CardFooter className="pt-0">
+                  <CardFooter className="pt-0 p-3 sm:p-6">
                     <Button 
-                      className="w-full" 
+                      size="sm"
+                      className="w-full text-xs sm:text-sm" 
                       disabled={product.stock <= 0} 
                       onClick={() => addToCart(product)}
                     >

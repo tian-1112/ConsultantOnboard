@@ -45,13 +45,13 @@ const Sidebar = ({ onNavItemClick }: SidebarProps = {}) => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/">
-            <a className="flex items-center">
+            <div className="flex items-center">
               <img src={petalsLogo} alt="Petals Flower Shop Logo" className="h-10 w-10 mr-2" />
               <div>
                 <h1 className="text-xl font-bold text-[#5B6A47]">Petals</h1>
                 <div className="text-xs text-[#5B6A47] uppercase tracking-widest">Flower Shop</div>
               </div>
-            </a>
+            </div>
           </Link>
           
           {/* Navigation Links - Desktop */}
@@ -64,13 +64,13 @@ const Sidebar = ({ onNavItemClick }: SidebarProps = {}) => {
                   href={item.href}
                   onClick={onNavItemClick}
                 >
-                  <a className={`flex items-center font-medium transition-colors duration-200 ${
+                  <div className={`flex items-center font-medium transition-colors duration-200 ${
                     isActive 
                       ? 'text-primary' 
                       : 'text-gray-700 hover:text-primary'
                   }`}>
                     {item.label}
-                  </a>
+                  </div>
                 </Link>
               );
             })}
@@ -79,14 +79,14 @@ const Sidebar = ({ onNavItemClick }: SidebarProps = {}) => {
           {/* Cart and User Actions - Desktop */}
           <div className="hidden md:flex items-center space-x-4">
             <Link href="/cart">
-              <a className="relative">
+              <div className="relative">
                 <i className="ri-shopping-cart-2-line text-lg"></i>
                 {cartCount > 0 && (
                   <Badge variant="destructive" className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center p-0 text-xs">
                     {cartCount}
                   </Badge>
                 )}
-              </a>
+              </div>
             </Link>
             
             <Button asChild className="ml-4">
@@ -97,14 +97,14 @@ const Sidebar = ({ onNavItemClick }: SidebarProps = {}) => {
           {/* Mobile Menu */}
           <div className="md:hidden flex items-center">
             <Link href="/cart">
-              <a className="relative mr-4">
+              <div className="relative mr-4">
                 <i className="ri-shopping-cart-2-line text-xl"></i>
                 {cartCount > 0 && (
                   <Badge variant="destructive" className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center p-0 text-xs">
                     {cartCount}
                   </Badge>
                 )}
-              </a>
+              </div>
             </Link>
             
             <Button variant="ghost" className="p-2" onClick={onNavItemClick}>
