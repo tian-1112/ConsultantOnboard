@@ -281,7 +281,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const orderData = insertOrderSchema.parse(order);
-      const itemsData = items.map(item => insertOrderItemSchema.omit({ orderId: true }).parse(item));
+      
+      // Parse items, orderId will be added in the storage.createOrder method
+      const itemsData = items.map(item => {
+        // Remove orderId if it exists (will be set by the storage method)
+        const { orderId, ...itemWithoutOrderId } = item;
+        return insertOrderItemSchema.omit({ orderId: true }).parse(itemWithoutOrderId);
+      });
       
       const newOrder = await storage.createOrder(orderData, itemsData);
       const orderItems = await storage.getOrderItems(newOrder.id);
@@ -313,6 +319,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Create HTTP server
   const httpServer = createServer(app);
+
+  // Initialize database with sample data
+  // This is safe to call multiple times as it checks if data already exists
+  try {
+    // Check if storage instance has initializeData method (DatabaseStorage vs MemStorage)
+    if (typeof (storage as any).initializeData === 'function') {
+      await (storage as any).initializeData();
+      console.log('Database initialized with sample data');
+    }
+  } catch (err) {
+    console.error('Failed to initialize database:', err);
+  }
 
   return httpServer;
 }
