@@ -7,13 +7,13 @@ export const initialCartItems: CartItem[] = [
     name: 'Red Roses',
     price: 299000,
     quantity: 1,
-    imageUrl: '/assets/red rose.jpeg'
+    imageUrl: '/assets/red-rose.jpeg'
   },
   {
     productId: 2,
     name: 'Tulip Bouquet',
     price: 249900,
     quantity: 2,
-    imageUrl: '/assets/tulip bouquet.jpeg'
+    imageUrl: '/assets/tulip-bouquet.jpeg'
   }
 ];

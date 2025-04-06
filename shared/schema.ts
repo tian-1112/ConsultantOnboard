@@ -81,7 +81,13 @@ export const insertOrderItemSchema = createInsertSchema(orderItems).omit({
   id: true,
 });
 
+// Create a schema for order items without orderId (used for creation)
+export const insertOrderItemWithoutOrderIdSchema = insertOrderItemSchema.omit({
+  orderId: true,
+});
+
 export type InsertOrderItem = z.infer<typeof insertOrderItemSchema>;
+export type InsertOrderItemWithoutOrderId = z.infer<typeof insertOrderItemWithoutOrderIdSchema>;
 export type OrderItem = typeof orderItems.$inferSelect;
 
 // Users (system users)

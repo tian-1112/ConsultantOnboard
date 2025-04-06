@@ -197,7 +197,7 @@ export default function Checkout() {
               <div className="flex gap-4 items-center">
                 <div className="w-16 h-16 rounded overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1548094990-c16ca90f1f0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" 
+                    src="/assets/red-rose.jpeg" 
                     alt="Red Roses"
                     className="w-full h-full object-cover"
                   />
@@ -212,7 +212,7 @@ export default function Checkout() {
               <div className="flex gap-4 items-center">
                 <div className="w-16 h-16 rounded overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1520219306112-90c15f970591?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" 
+                    src="/assets/tulip-bouquet.jpeg" 
                     alt="Tulip Bouquet"
                     className="w-full h-full object-cover"
                   />

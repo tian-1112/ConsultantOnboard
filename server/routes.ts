@@ -6,7 +6,10 @@ import {
   insertProductSchema, 
   insertCustomerSchema,
   insertOrderSchema, 
-  insertOrderItemSchema
+  insertOrderItemSchema,
+  insertOrderItemWithoutOrderIdSchema,
+  InsertOrderItem,
+  InsertOrderItemWithoutOrderId
 } from "@shared/schema";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
@@ -283,13 +286,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const orderData = insertOrderSchema.parse(order);
       
       // Parse items, orderId will be added in the storage.createOrder method
-      const itemsData = items.map(item => {
-        // Remove orderId if it exists (will be set by the storage method)
-        const { orderId, ...itemWithoutOrderId } = item;
-        return insertOrderItemSchema.omit({ orderId: true }).parse(itemWithoutOrderId);
-      });
+      // Parse items using the schema that doesn't require orderId
+      const itemsData = items.map(item => 
+        insertOrderItemWithoutOrderIdSchema.parse(item)
+      );
       
-      const newOrder = await storage.createOrder(orderData, itemsData);
+      // Type assertion is safe because createOrder will add the orderId
+      const newOrder = await storage.createOrder(orderData, itemsData as any);
       const orderItems = await storage.getOrderItems(newOrder.id);
       
       res.status(201).json({ ...newOrder, items: orderItems });
